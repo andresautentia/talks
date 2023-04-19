@@ -4,6 +4,7 @@ import { FilterTalksQry } from '../../application/filter-talks-qry'
 import { GetTalksQry } from '../../application/get-talks-qry'
 import { Talk } from '../../domain/talk'
 import { Hall } from '../../domain/hall'
+import { UseCaseService } from '../../../../core/command/use-case-service'
 
 interface UseGetTalksProps {
     topicSelected: number
@@ -11,20 +12,21 @@ interface UseGetTalksProps {
 }
 
 export const useGetTalks = ({ topicSelected, speakerSelected }: UseGetTalksProps) => {
-    const GetTopics = useResolve(GetTalksQry)
-    const FilterTalks = useResolve(FilterTalksQry)
+    const getTopics = useResolve(GetTalksQry)
+    const filterTalks = useResolve(FilterTalksQry)
+    const useCaseService = new UseCaseService()
     const [talks, setTalks] = useState<Talk[]>([])
     const [hours, setHours] = useState<string[]>([])
     const [halls, setHalls] = useState<Hall[]>([])
 
     const getAllTalks = () => {
-        GetTopics.execute().then(response => {
+        getTopics.execute().then(response => {
             setTalks(response)
         })
     }
 
     const getFilteredTalks = () => {
-        FilterTalks.execute(speakerSelected, topicSelected).then(response => {
+        useCaseService.execute(filterTalks, { speakerSelected, topicSelected }).then(response => {
             setTalks(response)
         })
     }
