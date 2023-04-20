@@ -1,12 +1,12 @@
 import 'reflect-metadata'
 import { GetSpeakerQry } from './get-speakers-qry'
-import { verify, instance, mock } from 'ts-mockito'
+import { instance, mock, verify } from 'ts-mockito'
 import { SpeakerRepository } from '../domain/speaker-repository'
 
 describe('GetSpeaker', () => {
     it('should call speakerRepository.getSpeakers once', () => {
         const { getSpeakerQry, speakerRepository } = setup()
-        getSpeakerQry.execute()
+        getSpeakerQry.handle()
         verify(speakerRepository.getSpeakers()).once()
     })
 })
