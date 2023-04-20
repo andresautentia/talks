@@ -1,12 +1,12 @@
 import 'reflect-metadata'
-import { verify, instance, mock } from 'ts-mockito'
+import { instance, mock, verify } from 'ts-mockito'
 import { TalkRepository } from '../domain/talk-repository'
 import { GetTalksQry } from './get-talks-qry'
 
 describe('GetTalks', () => {
     it('should call talkRepository.getTalks once', () => {
         const { getTalkQry, talkRepository } = setup()
-        getTalkQry.execute()
+        getTalkQry.handle()
         verify(talkRepository.getTalks()).once()
     })
 })

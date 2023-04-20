@@ -20,7 +20,7 @@ export const useGetTalks = ({ topicSelected, speakerSelected }: UseGetTalksProps
     const [halls, setHalls] = useState<Hall[]>([])
 
     const getAllTalks = () => {
-        getTopics.execute().then(response => {
+        useCaseService.execute(getTopics).then(response => {
             setTalks(response)
         })
     }
