@@ -1,3 +1,3 @@
-export interface UseCase {
-    handle(params?: any): Promise<any>
+export interface UseCase<Params = void, Response = void> {
+    handle(params?: Params): Promise<Response>
 }

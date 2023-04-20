@@ -4,12 +4,13 @@ import { Talk } from '../domain/talk'
 import type { TalkRepository } from '../domain/talk-repository'
 import { UseCase } from '../../../core/command/use-case'
 
+type Params = { speakerSelected: number; topicSelected: number }
+
 @injectable()
-export class FilterTalksQry implements UseCase {
+export class FilterTalksQry implements UseCase<Params, Talk[]> {
     constructor(@inject(TOKENS.TALKS_REPOSITORY) private readonly talkRepository: TalkRepository) {}
 
-    handle(params: any): Promise<Talk[]> {
-        const { speakerSelected, topicSelected } = params
+    handle({ speakerSelected, topicSelected }: Params): Promise<Talk[]> {
         return this.talkRepository.filterTalks(speakerSelected, topicSelected)
     }
 }
